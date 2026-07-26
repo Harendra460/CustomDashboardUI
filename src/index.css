@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: dark; }
+
+  html, body, #root { height: 100%; }
+
+  body {
+    @apply bg-ink-900 text-paper font-sans antialiased;
+    background-image:
+      radial-gradient(900px 500px at 12% -8%, rgba(242, 194, 0, 0.05), transparent 60%),
+      radial-gradient(700px 420px at 92% 0%, rgba(77, 163, 255, 0.05), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* Keyboard focus stays obvious everywhere — this is a safety tool. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-hivis ring-offset-2 ring-offset-ink-900 rounded-sm;
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-ink-600 rounded-full border-2 border-transparent bg-clip-content; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-line; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      transition-duration: .001ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* --- surfaces --- */
+  .panel { @apply bg-ink-800 border border-line rounded-lg shadow-panel; }
+  .panel-head { @apply flex items-center justify-between gap-3 px-4 py-3 border-b border-line; }
+
+  /* --- typography --- */
+  .eyebrow {
+    @apply font-display text-[11px] font-medium uppercase tracking-[0.18em] text-mist;
+    font-weight: 500;
+  }
+  .h-display { @apply font-display font-semibold uppercase tracking-[0.04em]; }
+  .stat { @apply font-display text-4xl font-semibold tabular-nums leading-none; }
+
+  /* --- controls --- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-2
+           text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-primary { @apply btn bg-hivis text-ink-900 font-semibold hover:bg-[#FFD426]; }
+  .btn-ghost   { @apply btn border border-line text-paper hover:bg-ink-700; }
+  .btn-danger  { @apply btn bg-signal/15 text-signal border border-signal/40 hover:bg-signal/25; }
+  .btn-sm      { @apply px-2.5 py-1.5 text-xs; }
+
+  .field {
+    @apply w-full bg-ink-900 border border-line rounded-md px-3 py-2 text-sm text-paper
+           placeholder:text-mist/60 focus:border-hivis/60 transition-colors;
+  }
+  .label { @apply block text-xs font-medium text-mist mb-1.5; }
+
+  /* --- data --- */
+  .table-wrap { @apply overflow-x-auto; }
+  .tbl { @apply w-full text-sm border-collapse; }
+  .tbl thead th {
+    @apply text-left px-4 py-2.5 font-display text-[11px] uppercase tracking-[0.12em]
+           text-mist border-b border-line whitespace-nowrap;
+    font-weight: 500;
+  }
+  .tbl tbody td { @apply px-4 py-3 border-b border-line/60 align-middle; }
+  .tbl tbody tr:hover { @apply bg-ink-700/40; }
+  .mono { @apply font-mono text-xs tracking-tight; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-[11px] font-medium
+           uppercase tracking-wide border;
+  }
+
+  /*
+   * Hazard stripes. Used in exactly one place — the banner above escalated
+   * alerts — so the pattern keeps its meaning instead of becoming decoration.
+   */
+  .hazard-band {
+    height: 6px;
+    background: repeating-linear-gradient(
+      -45deg, #F2C200 0 12px, #0E1116 12px 24px
+    );
+  }
+}
